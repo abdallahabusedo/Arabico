@@ -52,3 +52,18 @@ def getDataAboutFeatures(imgs, extractFeature):
     mean = np.mean(extractedFeatures, axis=0)
     var = np.var(extractedFeatures, axis=0)
     return mean, var
+
+
+def isTextBlack(_img):
+    img = np.copy(_img)
+    t = filters.threshold_otsu(img)
+    img = img > t
+    white_vert = np.sum(img, axis=0)
+    white_horz = np.sum(img, axis=1)
+    black_vert = img.shape[0]-white_vert
+    black_horz = img.shape[1] - white_horz
+    white_sum = white_horz[0] + white_horz[-1] + white_vert[0] + white_vert[-1]
+    black_sum = black_horz[0] + black_horz[-1] + black_vert[0] + black_vert[-1]
+    if black_sum > white_sum:
+        return False
+    return True

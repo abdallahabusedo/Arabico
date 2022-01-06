@@ -13,10 +13,13 @@ import os
 import cv2
 
 
-def binarization(_img):
+def binarization(_img, isBlack=True):
     img = np.copy(_img)
-    t = sk.filters.threshold_local(img, 21, offset=10)
-    img = img < t
+    t = filters.threshold_otsu(img)
+    if isBlack:
+        img = img > t
+    else:
+        img = img < t
     return img
 
 
@@ -28,6 +31,13 @@ def skeletonization(_img):
     thin = thin*1
     img = img == 0
     return thin
+
+
+def getEdgeImage(_img):
+    img = np.copy(_img)
+    img = np.uint8(img)
+    img = cv2.Canny(img, 50, 150, apertureSize=3)
+    return img
 
 
 def getEdgeImg(_img):

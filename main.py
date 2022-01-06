@@ -14,7 +14,7 @@ import preprocessing
 import extract_features
 
 for i in range(1, 10):
-    print("dataset "+str(i))
+    print("\ndataset "+str(i))
     imgsPaths = helpers.getImgsPaths("./ACDB/ACdata_base/"+str(i))
     imgs = []
     i = 0
@@ -22,18 +22,23 @@ for i in range(1, 10):
         img = helpers.readImageGray(imgPath)
         img = preprocessing.binarization(img)
         img = preprocessing.skeletonization(img)
+        #_, img = cv2.threshold(img, 150, 255, cv2.THRESH_BINARY)
+        #img = preprocessing.getEdgeImage(img)
+        # helpers.show_images([img])
         imgs.append(img)
+        # break
+
         # mean, var = helpers.getDataAboutFeatures(
         #     [img], extract_features.getGradients)
         # print("mean\t", "var")
         # for x in range(len(mean)):
         #     print(mean[x], "\t", var[x])
-        if i == 30:
-            break
-        i += 1
+        # if i == 30:
+        #     break
+        # i += 1
     # print(imgs[0].shape)
     mean, var = helpers.getDataAboutFeatures(
         imgs, extract_features.getGradients)
-    print("mean\t", "var")
+    print("mean\t\t\t\t", "var")
     for i in range(len(mean)):
-        print(mean[i], "\t", var[i])
+        print(mean[i], "\t\t\t\t", var[i])
