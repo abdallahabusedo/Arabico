@@ -67,3 +67,18 @@ def isTextBlack(_img):
     if black_sum > white_sum:
         return False
     return True
+
+
+def saveArrayToCSV(arr, filename, label="", append=False):
+    file = None
+    if append:
+        file = open(filename, 'a')
+    else:
+        file = open(filename, "w")
+    row = ""
+
+    for i in range(len(arr)):
+        row += str(arr[i])+","
+    row += label + "\n"
+
+    file.write(row)
