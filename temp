@@ -1,0 +1,33 @@
+# sy = filters.sobel_h(img)+0.0000000000000000000000000000000000001
+# sx = filters.sobel_v(img)+0.0000000000000000000000000000000000001
+#print(sy,sx)
+# z = np.rad2deg(np.arctan(sy/sx))
+# z = z.astype(int)
+# hist = sk.exposure.histogram(z)
+# arr = [] 
+# for i in range(len(hist[0])):
+#     arr.append((hist[0][i]/(img.shape[0]*img.shape[1]),hist[1][i]))
+# #arr = np.sort(arr)
+# arr.sort()
+# #arr = np.flip(arr)
+# arr = arr[::-1]
+# for i in range(5):
+#     print(arr[i])
+
+# fd,imm = sk.feature.hog(img, orientations=8, pixels_per_cell=(16, 16),cells_per_block=(1, 1),visualize=True,transform_sqrt=True,feature_vector=True)
+# helpers.show_images([imm])
+#fd = np.reshape(fd,img.shape)
+# for i in range(img.shape[0]):
+#     for j in range(img.shape[1]):
+#         if img[i][j] ==0:
+#             print("fd ",fd[i][j])
+# print(fd.shape)
+
+# hog = cv2.HOGDescriptor()
+# c_img =  np.uint8(img)
+# h = hog.compute(c_img)
+# h = np.reshape(h,(int(h.shape[0]/9),9))
+# mean = np.mean(h,axis=0)
+# var = np.var(h,axis=0)
+# for i in range(9):
+#     print("mean ",mean[i],"var ",var[i])

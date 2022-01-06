@@ -10,6 +10,7 @@ from skimage.transform import rescale, resize, downscale_local_mean
 from skimage import filters
 import math
 import os
+import os.path as path
 
 
 def show_images(images, titles=None):
@@ -40,14 +41,14 @@ def readImageGray(imgPath):
     return img
 
 
-def getImgsPaths(path):
-    imgs = [f for f in os.listdir(path) if os.isfile(os.join(path, f))]
+def getImgsPaths(_path):
+    imgs = [path.join(_path, f) for f in os.listdir(
+        _path) if path.isfile(path.join(_path, f))]
     return imgs
 
 
 def getDataAboutFeatures(imgs, extractFeature):
     extractedFeatures = [extractFeature(img) for img in imgs]
-    # get mean
     mean = np.mean(extractedFeatures, axis=0)
     var = np.var(extractedFeatures, axis=0)
     return mean, var
