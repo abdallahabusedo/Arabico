@@ -39,7 +39,7 @@ for i in range(1, 10):
         # i += 1
     # print(imgs[0].shape)
     mean, var = helpers.getDataAboutFeatures(
-        imgs, extract_features.getHPP)
+        imgs, extract_features.getLPQ)
     print("mean\t\t\t\t", "var")
     for i in range(len(mean)):
         print(mean[i], "\t\t\t\t", var[i])

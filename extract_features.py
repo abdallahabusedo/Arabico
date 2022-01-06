@@ -12,6 +12,7 @@ import math
 import os
 import helpers
 import preprocessing
+from scipy.signal import convolve2d
 
 
 def getGradients(_img_bin, no_of_features=5):
@@ -35,6 +36,7 @@ def getGradients(_img_bin, no_of_features=5):
                         hist[k] += 1
 
         hist /= (img.shape[0]*img.shape[1])
+        hist *= 100
         return hist
     except Exception as ex:
         print("error image")
@@ -57,4 +59,38 @@ def getHPP(_img_gray):
         for j in range(int(height//n_bins)):
             f[i] += horz_sum[i*int(height//n_bins)+j]
     f /= (height*height)
+    f *= 100
     return f
+
+
+def getLPQ(_img_gray):
+    winSize = 3
+    freqestim = 1
+    img = np.copy(_img_gray)
+    STFTalpha = 1 / winSize
+    convmode = 'valid'
+    img = np.float64(img)
+    r = (winSize - 1) / 2
+    x = np.arange(-r, r + 1)[np.newaxis]
+
+    if freqestim == 1:
+        w0 = np.ones_like(x)
+        w1 = np.exp(-2 * np.pi * x * STFTalpha * 1j)
+        w2 = np.conj(w1)
+
+    filterResp1 = convolve2d(convolve2d(img, w0.T, convmode), w1, convmode)
+    filterResp2 = convolve2d(convolve2d(img, w1.T, convmode), w0, convmode)
+    filterResp3 = convolve2d(convolve2d(img, w1.T, convmode), w1, convmode)
+    filterResp4 = convolve2d(convolve2d(img, w1.T, convmode), w2, convmode)
+    freqResp = np.dstack([filterResp1.real, filterResp1.imag,
+                          filterResp2.real, filterResp2.imag,
+                          filterResp3.real, filterResp3.imag,
+                          filterResp4.real, filterResp4.imag])
+
+    inds = np.arange(freqResp.shape[2])[np.newaxis, np.newaxis, :]
+    LPQdesc = ((freqResp > 0) * (2 ** inds)).sum(2)
+
+    LPQdesc = np.histogram(LPQdesc.flatten(), range(256))[0]
+    LPQdesc = LPQdesc / LPQdesc.sum()
+    LPQdesc *= 100
+    return LPQdesc
