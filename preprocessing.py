@@ -25,6 +25,7 @@ def binarization(_img, isBlack=True):
 
 def skeletonization(_img):
     img = np.copy(_img)
+    img = img == False
     thin = sk.morphology.skeletonize(img)
     thin = thin*1
     thin = thin == 0

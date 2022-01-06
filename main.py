@@ -20,8 +20,9 @@ for i in range(1, 10):
     i = 0
     for imgPath in imgsPaths:
         img = helpers.readImageGray(imgPath)
-        img = preprocessing.binarization(img)
-        img = preprocessing.skeletonization(img)
+        isTextBlack = helpers.isTextBlack(img)
+        #img = preprocessing.binarization(img, isTextBlack)
+        #img = preprocessing.skeletonization(img)
         #_, img = cv2.threshold(img, 150, 255, cv2.THRESH_BINARY)
         #img = preprocessing.getEdgeImage(img)
         # helpers.show_images([img])
@@ -38,7 +39,7 @@ for i in range(1, 10):
         # i += 1
     # print(imgs[0].shape)
     mean, var = helpers.getDataAboutFeatures(
-        imgs, extract_features.getGradients)
+        imgs, extract_features.getHPP)
     print("mean\t\t\t\t", "var")
     for i in range(len(mean)):
         print(mean[i], "\t\t\t\t", var[i])

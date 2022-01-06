@@ -14,19 +14,10 @@ import helpers
 import preprocessing
 
 
-def getGradients(_img, no_of_features=5):
+def getGradients(_img_bin, no_of_features=5):
     # print(_img.shape)
     try:
-
-        img = np.copy(_img)
-        # hog = cv2.HOGDescriptor()
-        # c_img = np.uint8(img)
-        # h = hog.compute(c_img)
-        # h = np.reshape(h, (int(h.shape[0]/9), 9))
-        # fd = sk.feature.hog(img, orientations=9, pixels_per_cell=(
-        #     16, 16), cells_per_block=(3, 3), transform_sqrt=True, feature_vector=True)
-        # fd = np.reshape(fd, (int(fd.shape[0]/9), 9))
-        # mean = np.mean(fd, axis=0)
+        img = np.copy(_img_bin)
         sy = filters.sobel_h(img)+0.0000000000000000000000000000000000001
         sx = filters.sobel_v(img)+0.0000000000000000000000000000000000001
         z = np.rad2deg(np.arctan(sy/sx))
@@ -38,7 +29,6 @@ def getGradients(_img, no_of_features=5):
         for k in range(n_bins):
             upper_bound = (k+1)*45 - 180
             lower_bound = k*45 - 180
-            #print(upper_bound, lower_bound)
             for i in range(z.shape[0]):
                 for j in range(z.shape[1]):
                     if z[i][j] < upper_bound and z[i][j] >= lower_bound:
@@ -51,3 +41,20 @@ def getGradients(_img, no_of_features=5):
         print(img.shape)
         print(ex)
         return np.zeros(9)
+
+
+def getHPP(_img_gray):
+    img = np.copy(_img_gray)
+    n_bins = 10
+    height = 50
+    img = resize(img, (height, height),
+                 anti_aliasing=True)
+    img = preprocessing.binarization(img)
+    img = img == False
+    horz_sum = np.sum(img, axis=1)
+    f = np.zeros(n_bins)
+    for i in range(n_bins):
+        for j in range(int(height//n_bins)):
+            f[i] += horz_sum[i*int(height//n_bins)+j]
+    f /= (height*height)
+    return f
