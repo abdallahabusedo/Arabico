@@ -14,6 +14,23 @@ import helpers
 import preprocessing
 
 
+def get_ToS(skeleton_img, type):
+    result = np.copy(skeleton_img)
+    if type == "sob":
+        result = sk.filters.sobel(skeleton_img)
+    elif type == "prew":
+        result = sk.filters.prewitt(skeleton_img)
+    elif type == "rob":
+        result = sk.filters.roberts(skeleton_img)
+    elif type == "sch":
+        result = sk.filters.scharr(skeleton_img)
+    elif type == "lap":
+        result = sk.filters.laplace(skeleton_img)
+    elif type == "hog":
+        _, result = sk.feature.hog(skeleton_img, visualize=True)
+    return result
+
+
 def getGradients(_img, no_of_features=5):
     # print(_img.shape)
     img = np.copy(_img)

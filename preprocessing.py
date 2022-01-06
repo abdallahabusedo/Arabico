@@ -20,6 +20,29 @@ def binarization(_img):
     return img
 
 
+def get_skeleton(_input_img, reverse_bin=False):
+    input_img = np.copy(_input_img)
+    # convert to grey scale
+    input_img = input_img.astype(np.float64) / np.max(input_img)
+    input_img = 255 * input_img
+    input_img = input_img.astype(np.uint8)
+
+    # binarization
+    input_img = binarization(input_img)
+
+    # remove noise
+    input_img = binary_dilation(input_img)
+    input_img = binary_erosion(input_img)
+
+    # calculate the skeleton
+    skeleton_img = sk.morphology.skeletonize(input_img)
+    skeleton_img = skeleton_img*1
+    if reverse_bin:
+        skeleton_img = skeleton_img == 0
+        skeleton_img = skeleton_img*1
+    return skeleton_img
+
+
 def skeletonization(_img):
     img = np.copy(_img)
     thin = sk.morphology.skeletonize(img)
