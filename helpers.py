@@ -11,6 +11,7 @@ from skimage import filters
 import math
 import os
 import os.path as path
+import csv
 
 
 def show_images(images, titles=None):
@@ -85,13 +86,15 @@ def saveArrayToCSV(arr, filename, label="", append=False):
 
 
 def readFromCSV(filename):
-    file = open(filename, "r")
     features = []
-    label = []
-    for row in file:
-        featrueSlice = slice(0, len(row)-4)
-        features.append(row[featrueSlice])
-        lab = row.replace(str(row[featrueSlice]), "")
-        lab = lab.replace(",", "")
-        label.append(lab)
-    return features, label
+    labels = []
+    csv_reader = csv.reader(open(filename), delimiter=',')
+    for row in csv_reader:
+        feature = row[0:-2]
+        for i in range(len(feature)):
+            feature[i] = float(feature[i])
+        label = row[-1]
+        features.append(feature)
+        labels.append(label)
+
+    return features, labels
