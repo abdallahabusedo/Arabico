@@ -141,3 +141,99 @@ def getWOr(_img_gray):
     else:
         s = 0.0
     return [s]
+
+
+def getLVL(_skeleton_img, lineThresholdFraction=0.2):
+    skeleton_img = np.copy(_skeleton_img)
+    skeleton_img = skeleton_img == False
+    rows, cols = skeleton_img.shape
+    featureVector = []
+    verticalLines = []
+
+    for col in range(cols):
+        cnt = 0
+        tempCnt = 0
+        minl, maxr = 1e9, 0
+
+        for row in range(rows):
+            if skeleton_img[row, col] == 1:
+                tempCnt += 1
+                minl = min(minl, row)
+                maxr = max(maxr, row)
+            else:
+                if tempCnt > cnt:
+                    cnt = tempCnt
+                tempCnt = 0
+        if cnt > rows*lineThresholdFraction:
+            verticalLines.append(cnt)
+
+    if len(verticalLines) == 0:
+        verticalLines.append(0)
+    verticalLines = np.array(verticalLines)
+
+    featureVector.append(maxr-minl+1)  # text height
+    featureVector.append(verticalLines.shape[0])  # number of lines
+    featureVector.append(np.max(verticalLines))  # longest line
+    # ratio between longest line and text height
+    featureVector.append(np.max(verticalLines)/(maxr-minl+1))
+    featureVector.append(np.var(verticalLines))  # variance among lines
+    return featureVector
+
+
+def getTTH(_skeleton_img, minThicknessThreshold=5, maxThicknessThreshold=100):
+    skeleton_img = np.copy(_skeleton_img)
+    skeleton_img = skeleton_img == False
+    rows, cols = skeleton_img.shape
+    allThickness = []
+    for row in range(rows):
+        tl, tr = -1, -1
+        for col in range(cols):
+            if skeleton_img[row, col] == 1:
+                if tl == -1:
+                    tl = col
+                else:
+                    tr = col
+            else:
+                if tr-tl+1 > minThicknessThreshold and tr-tl+1 < maxThicknessThreshold:
+                    allThickness.append(tr-tl+1)
+                tl, tr = -1, -1
+    if len(allThickness) == 0:
+        return [0]
+    return [np.mean(allThickness)]
+
+
+def getHVSL(_gray_img, isTextBlack):
+    # _, bw = cv2.threshold(_gray_img, 150, 255, cv2.THRESH_BINARY)
+    bw = preprocessing.binarization(_gray_img, isTextBlack)
+    bw = np.uint8(bw)*255  # 0 ,1
+    edges = cv2.Canny(bw, 50, 150, apertureSize=3)
+    img_sk = preprocessing.skeletonization(bw)
+    img_sk = img_sk == False
+    # helpers.show_images([img_sk])
+    img_sk = np.uint8(img_sk)*255
+    horizontal = np.copy(edges)
+    vertical = np.copy(edges)
+    # Specify size on horizontal axis
+    cols = horizontal.shape[1]
+    horizontal_size = max(cols // 30, 2)
+    # print(horizontal_size)
+    # Create structure element for extracting horizontal lines through morphology operations
+    horizontalStructure = cv2.getStructuringElement(
+        cv2.MORPH_RECT, (horizontal_size, 1))
+    # Apply morphology operations
+    horizontal = cv2.erode(horizontal, horizontalStructure)
+    horizontal = cv2.dilate(horizontal, horizontalStructure)
+    # Show extracted horizontal lines
+    # Specify size on vertical axis
+    rows = vertical.shape[0]
+    verticalsize = max(rows // 30, 2)
+    # Create structure element for extracting vertical lines through morphology operations
+    verticalStructure = cv2.getStructuringElement(
+        cv2.MORPH_RECT, (1, verticalsize))
+    # Apply morphology operations
+    vertical = cv2.erode(vertical, verticalStructure)
+    vertical = cv2.dilate(vertical, verticalStructure)
+    num_labelsV, _ = cv2.connectedComponents(vertical)
+    num_labelsH, _ = cv2.connectedComponents(horizontal)
+    feature = num_labelsV/num_labelsH
+    return [feature]

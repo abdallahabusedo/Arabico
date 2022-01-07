@@ -13,6 +13,9 @@ import helpers
 import preprocessing
 import extract_features
 from sklearn import tree
+from sklearn import svm
+from sklearn.ensemble import AdaBoostClassifier
+from sklearn.ensemble import RandomForestClassifier
 
 
 def decisionTreeClassifier():
@@ -31,3 +34,25 @@ def decisionTreeClassifier():
     f = np.reshape(f, (1, -1))
     # class 6 and the image from class 9
     print(clf.predict(f))
+
+
+def svmClassifier(features, labels):
+    clf = svm.NuSVC(gamma="auto")
+    clf.fit(features, labels)
+    return clf
+
+
+# def adaboostDesicionTreeClassifier(features, labels, features_test, labels_test, T):
+#     return adaboostClassifier(labels, features, labels_test, features_test, T,  tree.DecisionTreeClassifier())
+
+
+def adaboostClassifier(features, labels):
+    clf = AdaBoostClassifier(n_estimators=100, random_state=0)
+    clf.fit(features, labels)
+    return clf
+
+
+def randomForestClassifier(features, labels):
+    clf = RandomForestClassifier(max_depth=1)
+    clf.fit(features, labels)
+    return clf
