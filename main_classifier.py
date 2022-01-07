@@ -25,6 +25,7 @@ toe, _ = helpers.readFromCSV("csv/toe.csv")
 tos, _ = helpers.readFromCSV("csv/tos.csv")
 #tth, _ = helpers.readFromCSV("tth.csv")
 wor, _ = helpers.readFromCSV("csv/wor.csv")
+hvsl, _ = helpers.readFromCSV("csv/hvsl.csv")
 
 lvl_test, labels_test = helpers.readFromCSV(
     "csv/lvl_test.csv")  # LVL is not usable
@@ -34,28 +35,73 @@ toe_test, _ = helpers.readFromCSV("csv/toe_test.csv")
 tos_test, _ = helpers.readFromCSV("csv/tos_test.csv")
 #tth, _ = helpers.readFromCSV("tth.csv")
 wor_test, _ = helpers.readFromCSV("csv/wor_test.csv")
+hvsl_test, _ = helpers.readFromCSV("csv/hvsl_test.csv")
 
+features_name = ['lpq', 'toe', 'tos', 'wor', 'hslv', 'lvl', 'hpp']
+feature_values = [lpq, toe, tos, wor, hvsl, lvl, hpp]
+feature_values_test = [lpq_test, toe_test, tos_test,
+                       wor_test, hvsl_test, lvl_test, hpp_test]
+highest_acc = -1
+f_used = None
+for i in range(1, int(2**len(features_name))+1):
+    features_used = []
+    features_used_test = []
+    features_used_indx = []
+    bin_string = bin(i)[::-1]
+    for i in range(len(bin_string)):
+        if bin_string[i] == 'b':
+            break
+        if bin_string[i] == '1':
+            indx = len(features_name)-i-1
+            features_used.append(feature_values[indx])
+            features_used_test.append(feature_values_test[indx])
+            features_used_indx.append(indx)
+    print("features used")
+    for indx in features_used_indx:
+        print(features_name[indx])
+    if len(features_used) == 0:
+        continue
+    elif len(features_used) == 1:
+        clf = classification.svmClassifier(features_used[0], labels)
+        acc = 0
+        for i in range(features_used[0].shape[0]):
+            f = np.reshape(features_used[0][i], (1, -1))
+            if clf.predict(f) == labels[i]:
+                acc += 1
+        print("test accuracy ", 100*acc/len(labels))
+        if 100*acc/len(labels) > highest_acc:
+            highest_acc = 100*acc/len(labels)
+            f_used = features_used_indx
+        acc = 0
+        for i in range(features_used_test[0].shape[0]):
+            f = np.reshape(features_used_test[0][i], (1, -1))
+            if clf.predict(f) == labels_test[i]:
+                acc += 1
+        print("test accuracy ", 100*acc/len(labels_test))
 
-features = (lpq, wor, hpp, toe, tos)
-allFeatures = np.concatenate(
-    features, axis=1)
+    else:
+        allFeatures = np.concatenate(tuple(features_used), axis=1)
+        allFeatures_test = np.concatenate(
+            tuple(features_used_test), axis=1)
 
-features_test = (lpq_test, wor_test, hpp_test, toe_test, tos_test)
-allFeatures_test = np.concatenate(
-    features_test, axis=1)
+        clf = classification.svmClassifier(allFeatures, labels)
+        acc = 0
+        for i in range(allFeatures.shape[0]):
+            f = np.reshape(allFeatures[i], (1, -1))
+            if clf.predict(f) == labels[i]:
+                acc += 1
+        print("test accuracy ", 100*acc/len(labels))
+        if 100*acc/len(labels) > highest_acc:
+            highest_acc = 100*acc/len(labels)
+            f_used = features_used_indx
+        acc = 0
+        for i in range(allFeatures_test.shape[0]):
+            f = np.reshape(allFeatures_test[i], (1, -1))
+            if clf.predict(f) == labels_test[i]:
+                acc += 1
+        print("test accuracy ", 100*acc/len(labels_test))
 
-clf = classification.svmClassifier(allFeatures, labels)
-acc = 0
-for i in range(allFeatures.shape[0]):
-    f = np.reshape(allFeatures[i], (1, -1))
-    if clf.predict(f) == labels[i]:
-        acc += 1
-print("test accuracy ", 100*acc/len(labels))
-
-
-acc = 0
-for i in range(allFeatures_test.shape[0]):
-    f = np.reshape(allFeatures_test[i], (1, -1))
-    if clf.predict(f) == labels_test[i]:
-        acc += 1
-print("test accuracy ", 100*acc/len(labels_test))
+print("\n\n\nhighest training acc  ", highest_acc)
+print("when using")
+for indx in f_used:
+    print(features_name[indx])
