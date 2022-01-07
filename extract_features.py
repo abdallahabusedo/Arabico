@@ -197,4 +197,6 @@ def getTTH(_skeleton_img, minThicknessThreshold=5, maxThicknessThreshold=100):
                 if tr-tl+1 > minThicknessThreshold and tr-tl+1 < maxThicknessThreshold:
                     allThickness.append(tr-tl+1)
                 tl, tr = -1, -1
-    return allThickness
+    if len(allThickness) == 0:
+        return [0]
+    return [np.mean(allThickness)]
