@@ -178,3 +178,93 @@ number of error images : 0
 number of images :190
 number of images that not exceeded the  0.5 ratio :20
 percentage of Images exceeded the ratio 89.47368421052632%
+./ACDB/ACdata_base/1/*
+number of error images : 0
+number of images :190
+number of images that not exceeded the  0.5 ratio :190
+percentage of Images exceeded the ratio 0.0%
+./ACDB/ACdata_base/2/*
+number of error images : 0
+number of images :190
+number of images that not exceeded the  0.5 ratio :182
+percentage of Images exceeded the ratio 4.210526315789476%
+./ACDB/ACdata_base/3/*
+number of error images : 0
+number of images :180
+number of images that not exceeded the  0.5 ratio :173
+percentage of Images exceeded the ratio 3.888888888888886%
+./ACDB/ACdata_base/4/*
+number of error images : 0
+number of images :185
+number of images that not exceeded the  0.5 ratio :179
+percentage of Images exceeded the ratio 3.2432432432432434%
+./ACDB/ACdata_base/5/*
+number of error images : 0
+number of images :195
+number of images that not exceeded the  0.5 ratio :189
+percentage of Images exceeded the ratio 3.076923076923077%
+./ACDB/ACdata_base/6/*
+number of error images : 2
+number of images :178
+number of images that not exceeded the  0.5 ratio :166
+percentage of Images exceeded the ratio 6.741573033707871%
+./ACDB/ACdata_base/7/*
+number of error images : 0
+number of images :185
+number of images that not exceeded the  0.5 ratio :177
+percentage of Images exceeded the ratio 4.324324324324325%
+./ACDB/ACdata_base/8/*
+number of error images : 0
+number of images :190
+number of images that not exceeded the  0.5 ratio :175
+percentage of Images exceeded the ratio 7.8947368421052655%
+./ACDB/ACdata_base/9/*
+number of error images : 0
+number of images :190
+number of images that not exceeded the  0.5 ratio :20
+percentage of Images exceeded the ratio 89.47368421052632%
+./ACDB/ACdata_base/1/*
+number of error images : 0
+number of images :190
+number of images that not exceeded the  0.5 ratio :190
+percentage of Images exceeded the ratio 0.0%
+./ACDB/ACdata_base/2/*
+number of error images : 0
+number of images :190
+number of images that not exceeded the  0.5 ratio :182
+percentage of Images exceeded the ratio 4.210526315789476%
+./ACDB/ACdata_base/3/*
+number of error images : 0
+number of images :180
+number of images that not exceeded the  0.5 ratio :173
+percentage of Images exceeded the ratio 3.888888888888886%
+./ACDB/ACdata_base/4/*
+number of error images : 0
+number of images :185
+number of images that not exceeded the  0.5 ratio :179
+percentage of Images exceeded the ratio 3.2432432432432434%
+./ACDB/ACdata_base/5/*
+number of error images : 0
+number of images :195
+number of images that not exceeded the  0.5 ratio :189
+percentage of Images exceeded the ratio 3.076923076923077%
+./ACDB/ACdata_base/6/*
+number of error images : 2
+number of images :178
+number of images that not exceeded the  0.5 ratio :166
+percentage of Images exceeded the ratio 6.741573033707871%
+./ACDB/ACdata_base/7/*
+number of error images : 0
+number of images :185
+number of images that not exceeded the  0.5 ratio :177
+percentage of Images exceeded the ratio 4.324324324324325%
+./ACDB/ACdata_base/8/*
+number of error images : 0
+number of images :190
+number of images that not exceeded the  0.5 ratio :175
+percentage of Images exceeded the ratio 7.8947368421052655%
+./ACDB/ACdata_base/9/*
+number of error images : 0
+number of images :190
+number of images that not exceeded the  0.5 ratio :20
+percentage of Images exceeded the ratio 89.47368421052632%
