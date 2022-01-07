@@ -14,7 +14,7 @@ import preprocessing
 import extract_features
 appendCSV = False
 for i in range(1, 10):
-    i = 10-i
+
     print("\ndataset "+str(i))
     imgsPaths = helpers.getImgsPaths("./ACDB/ACdata_base/"+str(i))
     imgs = []
