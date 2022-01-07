@@ -35,6 +35,6 @@ def decisionTreeClassifier():
 
 
 def svmClassifier(features, labels):
-    clf = svm.SVC(decision_function_shape='ovo')
+    clf = svm.NuSVC(gamma="auto")
     clf.fit(features, labels)
     return clf
