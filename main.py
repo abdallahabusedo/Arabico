@@ -12,7 +12,7 @@ import math
 import helpers
 import preprocessing
 import extract_features
-
+appendCSV = False
 for i in range(1, 10):
     print("\ndataset "+str(i))
     imgsPaths = helpers.getImgsPaths("./ACDB/ACdata_base/"+str(i))
@@ -22,23 +22,24 @@ for i in range(1, 10):
         img = helpers.readImageGray(imgPath)
         isTextBlack = helpers.isTextBlack(img)
         arr = extract_features.getLPQ(img)
-        helpers.saveArrayToCSV(arr, "lpq.csv", str(i+1), True)
+        helpers.saveArrayToCSV(arr, "lpq.csv", str(i), appendCSV)
         arr = extract_features.getHPP(img)
-        helpers.saveArrayToCSV(arr, "hpp.csv", str(i+1), True)
+        helpers.saveArrayToCSV(arr, "hpp.csv", str(i), appendCSV)
         img_bin = preprocessing.binarization(img, isTextBlack)
         img_skeleton = preprocessing.skeletonization(img_bin)
         arr = extract_features.getGradients(img_skeleton)
-        helpers.saveArrayToCSV(arr, "tos.csv", str(i+1), True)
+        helpers.saveArrayToCSV(arr, "tos.csv", str(i), appendCSV)
         _, Bimg = cv2.threshold(img, 150, 255, cv2.THRESH_BINARY)
         img_edge = preprocessing.getEdgeImage(Bimg)
         arr = extract_features.getGradients(img_edge)
-        helpers.saveArrayToCSV(arr, "toe.csv", str(i+1), True)
+        helpers.saveArrayToCSV(arr, "toe.csv", str(i), appendCSV)
         arr = extract_features.getWOr(img)
-        helpers.saveArrayToCSV(arr, "wor.csv", str(i+1), True)
+        helpers.saveArrayToCSV(arr, "wor.csv", str(i), appendCSV)
         arr = extract_features.getLVL(img_skeleton)
-        helpers.saveArrayToCSV(arr, "lvl.csv", str(i+1), True)
+        helpers.saveArrayToCSV(arr, "lvl.csv", str(i), appendCSV)
         arr = extract_features.getTTH(img_skeleton)
-        helpers.saveArrayToCSV(arr, "tth.csv", str(i+1), True)
+        helpers.saveArrayToCSV(arr, "tth.csv", str(i), appendCSV)
+        appendCSV = True
         # helpers.show_images([img])
         # imgs.append(img)
         # break
