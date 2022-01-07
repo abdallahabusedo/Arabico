@@ -17,7 +17,7 @@ for i in range(1, 10):
     print("\ndataset "+str(i))
     imgsPaths = helpers.getImgsPaths("./ACDB/ACdata_base/"+str(i))
     imgs = []
-    i = 0
+    # i = 0
     for imgPath in imgsPaths:
         img = helpers.readImageGray(imgPath)
         isTextBlack = helpers.isTextBlack(img)
@@ -35,6 +35,10 @@ for i in range(1, 10):
         helpers.saveArrayToCSV(arr, "toe.csv", str(i+1), True)
         arr = extract_features.getWOr(img)
         helpers.saveArrayToCSV(arr, "wor.csv", str(i+1), True)
+        arr = extract_features.getLVL(img_skeleton)
+        helpers.saveArrayToCSV(arr, "lvl.csv", str(i+1), True)
+        arr = extract_features.getTTH(img_skeleton)
+        helpers.saveArrayToCSV(arr, "tth.csv", str(i+1), True)
         # helpers.show_images([img])
         # imgs.append(img)
         # break

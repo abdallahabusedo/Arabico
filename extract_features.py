@@ -141,3 +141,60 @@ def getWOr(_img_gray):
     else:
         s = 0.0
     return [s]
+
+
+def getLVL(_skeleton_img, lineThresholdFraction=0.2):
+    skeleton_img = np.copy(_skeleton_img)
+    skeleton_img = skeleton_img == False
+    rows, cols = skeleton_img.shape
+    featureVector = []
+    verticalLines = []
+
+    for col in range(cols):
+        cnt = 0
+        tempCnt = 0
+        minl, maxr = 1e9, 0
+
+        for row in range(rows):
+            if skeleton_img[row, col] == 1:
+                tempCnt += 1
+                minl = min(minl, row)
+                maxr = max(maxr, row)
+            else:
+                if tempCnt > cnt:
+                    cnt = tempCnt
+                tempCnt = 0
+        if cnt > rows*lineThresholdFraction:
+            verticalLines.append(cnt)
+
+    if len(verticalLines) == 0:
+        verticalLines.append(0)
+    verticalLines = np.array(verticalLines)
+
+    featureVector.append(maxr-minl+1)  # text height
+    featureVector.append(verticalLines.shape[0])  # number of lines
+    featureVector.append(np.max(verticalLines))  # longest line
+    # ratio between longest line and text height
+    featureVector.append(np.max(verticalLines)/(maxr-minl+1))
+    featureVector.append(np.var(verticalLines))  # variance among lines
+    return featureVector
+
+
+def getTTH(_skeleton_img, minThicknessThreshold=5, maxThicknessThreshold=100):
+    skeleton_img = np.copy(_skeleton_img)
+    skeleton_img = skeleton_img == False
+    rows, cols = skeleton_img.shape
+    allThickness = []
+    for row in range(rows):
+        tl, tr = -1, -1
+        for col in range(cols):
+            if skeleton_img[row, col] == 1:
+                if tl == -1:
+                    tl = col
+                else:
+                    tr = col
+            else:
+                if tr-tl+1 > minThicknessThreshold and tr-tl+1 < maxThicknessThreshold:
+                    allThickness.append(tr-tl+1)
+                tl, tr = -1, -1
+    return allThickness
