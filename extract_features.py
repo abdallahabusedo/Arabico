@@ -8,11 +8,16 @@ import skimage as sk
 from skimage.morphology import binary_dilation, binary_erosion
 from skimage.transform import rescale, resize, downscale_local_mean
 from skimage import filters
+from skimage.segmentation import flood, flood_fill
+from skimage.color import rgb2gray, gray2rgb
+from skimage import measure
+from skimage.feature import match_template
 import math
 import os
 import helpers
 import preprocessing
 from scipy.signal import convolve2d
+from scipy import ndimage
 
 
 def getGradients(_img_bin, no_of_features=5):
@@ -94,3 +99,45 @@ def getLPQ(_img_gray):
     LPQdesc = LPQdesc / LPQdesc.sum()
     LPQdesc *= 100
     return LPQdesc
+
+
+def getSDs(_img_gray):
+    img = _img_gray.copy()
+    binary = preprocessing.binarization(img)
+    horizontal_hist = np.sum(binary, axis=1)
+    img_with_Diacritics = np.copy(binary)
+    img_with_Diacritics = img_with_Diacritics.astype(np.uint8)
+    basline = np.argmin(horizontal_hist)
+    seed = []
+    temp = img_with_Diacritics[basline, 0]
+    cp = gray2rgb(img_with_Diacritics)
+    for i in range(1, len(img_with_Diacritics[basline])):
+        if temp == 1 and img_with_Diacritics[basline, i] == 0:
+            seed.append((i, basline))
+        temp = img_with_Diacritics[basline, i]
+    for i in seed:
+        cv2.floodFill(img_with_Diacritics, None, i, 255)
+    image_without_diacritic = (binary-img_with_Diacritics)*-1
+    f_LATER_TO_DO = []
+    return image_without_diacritic, f_LATER_TO_DO
+
+
+def getWOr(_img_gray):
+    image_without_diacritic, _ = getSDs(_img_gray)
+    image_without_diacritic = image_without_diacritic.astype(np.uint8)
+    contour = measure.find_contours(image_without_diacritic)
+    s = 0
+    for c in contour:
+        rows, cols = c.shape[:2]
+        [vx, vy, x, y] = cv2.fitLine(c, cv2.DIST_L2, 0, 0.01, 0.01)
+        x_axis = np.array([1, 0])
+        line = np.array([vx, vy])
+        dot_product = np.dot(x_axis, line)
+        angle_2_x = np.arccos(dot_product)
+        angle = math.degrees(angle_2_x)
+        s += angle
+    if (len(contour) != 0):
+        s = s/len(contour)
+    else:
+        s = 0
+    return [s]
