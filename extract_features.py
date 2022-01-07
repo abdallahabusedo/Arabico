@@ -314,7 +314,7 @@ def getHVSL(_gray_img, isTextBlack):
     # Apply morphology operations
     vertical = cv2.erode(vertical, verticalStructure)
     vertical = cv2.dilate(vertical, verticalStructure)
-    num_labelsV, labels = cv2.connectedComponents(vertical)
-    num_labelsH, labels = cv2.connectedComponents(horizontal)
+    num_labelsV, _ = cv2.connectedComponents(vertical)
+    num_labelsH, _ = cv2.connectedComponents(horizontal)
     feature = num_labelsV/num_labelsH
     return [feature]
