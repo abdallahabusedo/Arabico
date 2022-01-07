@@ -44,7 +44,6 @@ for i in range(1, 10):
         arr = extract_features.getHVSL(img, isTextBlack)
         helpers.saveArrayToCSV(arr, "csv/hvsl.csv", str(i), appendCSV)
         appendCSV = True
-
         # helpers.show_images([img])
         # imgs.append(img)
         # break

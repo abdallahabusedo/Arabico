@@ -208,10 +208,7 @@ def getHVSL(_gray_img, isTextBlack):
     bw = preprocessing.binarization(_gray_img, isTextBlack)
     bw = np.uint8(bw)*255  # 0 ,1
     edges = cv2.Canny(bw, 50, 150, apertureSize=3)
-    img_sk = preprocessing.skeletonization(bw)
-    img_sk = img_sk == False
-    # helpers.show_images([img_sk])
-    img_sk = np.uint8(img_sk)*255
+    h, w = edges.shape
     horizontal = np.copy(edges)
     vertical = np.copy(edges)
     # Specify size on horizontal axis
@@ -237,4 +234,36 @@ def getHVSL(_gray_img, isTextBlack):
     num_labelsV, labels = cv2.connectedComponents(vertical)
     num_labelsH, labels = cv2.connectedComponents(horizontal)
     feature = num_labelsV/num_labelsH
-    return [feature]
+    whitePixels = np.sum(edges == 255)
+    numberofpixls = np.sum(edges)
+    ratio = whitePixels-numberofpixls
+    return [feature, num_labelsV/numberofpixls, num_labelsH/numberofpixls, ratio]
+
+
+def LVL(skeleton):
+    vertical = skeleton.copy()
+    rows = vertical.shape[0]
+    vertical_size = rows / 30
+    #Avoiding having (1,0) strcture element
+    vertical_size = vertical_size if vertical_size > 0 else vertical_size+1
+    #Create the suitable strcture element
+    verticalStructure = cv2.getStructuringElement(
+        cv2.MORPH_RECT, (1, int(vertical_size)))
+    vertical = cv2.erode(vertical, verticalStructure)
+    vertical = cv2.dilate(vertical.astype(np.uint8), verticalStructure)
+    labelNumber, labeledImage, stats, _ = cv2.connectedComponentsWithStats(
+        vertical.astype(np.uint8), connectivity=8)
+    maxLabel = np.argmax([np.sum(vertical[labeledImage == i])
+                         for i in range(1, labelNumber)])+1
+    VL = labelNumber-1  # excluding the background label
+    textHeight = cv2.boundingRect(vertical)[3]
+    # maxLength=np.sum(s==maxLabel)
+    maxLength = np.max(stats[1:, 3])
+    diffRatio = textHeight/maxLength
+    #TODO Check the eqn
+    var = np.diff(stats[1:, 3])
+    # print(var)
+
+    # print("textHeight", textHeight, "maxLength", maxLength,
+    #       "diffRatio", diffRatio, "verticalLines", VL)
+    return [VL, textHeight, maxLength, diffRatio]
