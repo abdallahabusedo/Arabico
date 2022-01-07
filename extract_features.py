@@ -141,3 +141,35 @@ def getWOr(_img_gray):
     else:
         s = 0.0
     return [s]
+
+
+def getHVSL(_img_gray):
+    # bw = preprocessing.binarization(_img_gray)*255
+    _, bw = cv2.threshold(_img_gray, 150, 255, cv2.THRESH_BINARY)
+    edges = cv2.Canny(bw, 50,  150, apertureSize=3)
+    horizontal = np.copy(edges)
+    vertical = np.copy(edges)
+    # Specify size on horizontal axis
+    cols = horizontal.shape[1]
+    horizontal_size = cols // 30
+    horizontalStructure = cv2.getStructuringElement(
+        cv2.MORPH_RECT, (horizontal_size, 1))
+    horizontal = cv2.erode(horizontal, horizontalStructure)
+    horizontal = cv2.dilate(horizontal, horizontalStructure)
+    rows = vertical.shape[0]
+    verticalsize = rows // 30
+    verticalStructure = cv2.getStructuringElement(
+        cv2.MORPH_RECT, (1, verticalsize))
+    vertical = cv2.erode(vertical, verticalStructure)
+    vertical = cv2.dilate(vertical, verticalStructure)
+    vNumber = []
+    hNumber = []
+    num_labels, labels = cv2.connectedComponents(_img_gray)
+    vNumber.append(num_labels)
+    num_labels, labels = cv2.connectedComponents(_img_gray)
+    hNumber.append(num_labels)
+    feature = []
+    for i in range(0, len(vNumber)):
+        feature.append(vNumber[i]/hNumber[i])
+    feature = np.array(feature)
+    return feature
