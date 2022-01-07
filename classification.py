@@ -13,6 +13,7 @@ import helpers
 import preprocessing
 import extract_features
 from sklearn import tree
+from sklearn import svm
 
 
 def decisionTreeClassifier():
@@ -31,3 +32,9 @@ def decisionTreeClassifier():
     f = np.reshape(f, (1, -1))
     # class 6 and the image from class 9
     print(clf.predict(f))
+
+
+def svmClassifier(features, labels):
+    clf = svm.NuSVC(gamma="auto")
+    clf.fit(features, labels)
+    return clf
