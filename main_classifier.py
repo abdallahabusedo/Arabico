@@ -18,36 +18,44 @@ import preprocessing
 import extract_features
 
 
-lvl, labels = helpers.readFromCSV("lvl.csv")  # LVL is not usable
-hpp, _ = helpers.readFromCSV("hpp.csv")
-lpq, _ = helpers.readFromCSV("lpq.csv")
-toe, _ = helpers.readFromCSV("toe.csv")
-tos, _ = helpers.readFromCSV("tos.csv")
+lvl, labels = helpers.readFromCSV("csv/lvl.csv")  # LVL is not usable
+hpp, _ = helpers.readFromCSV("csv/hpp.csv")
+lpq, _ = helpers.readFromCSV("csv/lpq.csv")
+toe, _ = helpers.readFromCSV("csv/toe.csv")
+tos, _ = helpers.readFromCSV("csv/tos.csv")
 #tth, _ = helpers.readFromCSV("tth.csv")
-wor, _ = helpers.readFromCSV("wor.csv")
+wor, _ = helpers.readFromCSV("csv/wor.csv")
 
-lvl_test, labels = helpers.readFromCSV("lvl_test.csv")  # LVL is not usable
-hpp_test, _ = helpers.readFromCSV("hpp_test.csv")
-lpq_test, _ = helpers.readFromCSV("lpq_test.csv")
-toe_test, _ = helpers.readFromCSV("toe_test.csv")
-tos_test, _ = helpers.readFromCSV("tos_test.csv")
+lvl_test, labels_test = helpers.readFromCSV(
+    "csv/lvl_test.csv")  # LVL is not usable
+hpp_test, _ = helpers.readFromCSV("csv/hpp_test.csv")
+lpq_test, _ = helpers.readFromCSV("csv/lpq_test.csv")
+toe_test, _ = helpers.readFromCSV("csv/toe_test.csv")
+tos_test, _ = helpers.readFromCSV("csv/tos_test.csv")
 #tth, _ = helpers.readFromCSV("tth.csv")
-wor_test, _ = helpers.readFromCSV("wor_test.csv")
+wor_test, _ = helpers.readFromCSV("csv/wor_test.csv")
 
 
-# features = (lpq, wor, hpp, toe, tos)
-# allFeatures = np.concatenate(
-#     features, axis=1)
-# print(allFeatures.shape)
-# clf = classification.svmClassifier(allFeatures, labels)
-# acc = 0
-# for i in range(allFeatures.shape[0]):
-#     f = np.reshape(allFeatures[i], (1, -1))
-#     if clf.predict(f) == labels[i]:
-#         acc += 1
-# print(100*acc/len(labels))
-# for x in tth:
-#     print(x.shape)
-# print(lvl.shape, hpp.shape, lpq.shape,
-#       toe.shape, tos.shape, tth.shape, wor.shape)
-# np.concatenate((lvl, hpp), axis=1)
+features = (lpq, wor, hpp, toe, tos)
+allFeatures = np.concatenate(
+    features, axis=1)
+
+features_test = (lpq_test, wor_test, hpp_test, toe_test, tos_test)
+allFeatures_test = np.concatenate(
+    features_test, axis=1)
+
+clf = classification.svmClassifier(allFeatures, labels)
+acc = 0
+for i in range(allFeatures.shape[0]):
+    f = np.reshape(allFeatures[i], (1, -1))
+    if clf.predict(f) == labels[i]:
+        acc += 1
+print("test accuracy ", 100*acc/len(labels))
+
+
+acc = 0
+for i in range(allFeatures_test.shape[0]):
+    f = np.reshape(allFeatures_test[i], (1, -1))
+    if clf.predict(f) == labels_test[i]:
+        acc += 1
+print("test accuracy ", 100*acc/len(labels_test))
