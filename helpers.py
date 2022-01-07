@@ -90,11 +90,12 @@ def readFromCSV(filename):
     labels = []
     csv_reader = csv.reader(open(filename), delimiter=',')
     for row in csv_reader:
-        feature = row[0:-2]
+        feature = row[0:-1]
         for i in range(len(feature)):
             feature[i] = float(feature[i])
+        feature = np.asarray(feature)
         label = row[-1]
         features.append(feature)
         labels.append(label)
 
-    return features, labels
+    return np.asarray(features), labels
