@@ -82,3 +82,16 @@ def saveArrayToCSV(arr, filename, label="", append=False):
     row += label + "\n"
 
     file.write(row)
+
+
+def readFromCSV(filename):
+    file = open(filename, "r")
+    features = []
+    label = []
+    for row in file:
+        featrueSlice = slice(0, len(row)-4)
+        features.append(row[featrueSlice])
+        lab = row.replace(str(row[featrueSlice]), "")
+        lab = lab.replace(",", "")
+        label.append(lab)
+    return features, label

@@ -17,7 +17,7 @@ for i in range(1, 10):
     print("\ndataset "+str(i))
     imgsPaths = helpers.getImgsPaths("./ACDB/ACdata_base/"+str(i))
     imgs = []
-    #i = 0
+    i = 0
     for imgPath in imgsPaths:
         img = helpers.readImageGray(imgPath)
         isTextBlack = helpers.isTextBlack(img)

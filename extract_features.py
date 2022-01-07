@@ -139,5 +139,5 @@ def getWOr(_img_gray):
     if (len(contour) != 0):
         s = s/len(contour)
     else:
-        s = 0
+        s = 0.0
     return [s]
