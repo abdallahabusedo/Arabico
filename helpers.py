@@ -12,6 +12,7 @@ import math
 import os
 import os.path as path
 import csv
+import pickle
 
 
 def show_images(images, titles=None):
@@ -80,7 +81,10 @@ def saveArrayToCSV(arr, filename, label="", append=False):
 
     for i in range(len(arr)):
         row += str(arr[i])+","
-    row += label + "\n"
+    if label != "":
+        row += label + "\n"
+    else:
+        row = row[:-1] + "\n"
 
     file.write(row)
 
@@ -101,14 +105,11 @@ def readFromCSV(filename):
     return np.asarray(features), labels
 
 
-def euc_dist(X):
-    Y = X = X.astype(np.float)
-    XX = np.sum(X * X, axis=1)[:, np.newaxis]
-    YY = XX.T
-    distances = np.dot(X, Y.T)
-    distances *= -2
-    distances += XX
-    distances += YY
-    np.maximum(distances, 0, distances)
-    distances.flat[::distances.shape[0] + 1] = 0.0
-    return np.sqrt(distances)
+def saveClfParameters(clf):
+    filename = 'finalized_classifier.sav'
+    pickle.dump(clf, open(filename, 'wb'))
+
+
+def loadCLfParameters(classifier_path):
+    loaded_classifier = pickle.load(open(classifier_path, 'rb'))
+    return loaded_classifier

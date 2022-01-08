@@ -48,10 +48,6 @@ def svmClassifier(features, labels):
     return clf
 
 
-# def adaboostDesicionTreeClassifier(features, labels, features_test, labels_test, T):
-#     return adaboostClassifier(labels, features, labels_test, features_test, T,  tree.DecisionTreeClassifier())
-
-
 def adaboostClassifier(features, labels):
     clf = AdaBoostClassifier(n_estimators=100, random_state=0)
     clf.fit(features, labels)
