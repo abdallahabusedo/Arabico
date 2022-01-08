@@ -62,15 +62,15 @@ for i in range(1, int(2**len(features_name))+1):
     if len(features_used) == 0:
         continue
     elif len(features_used) == 1:
-        #clf = classification.svmClassifier(features_used[0], labels)
+        clf = classification.svmClassifier(features_used[0], labels)
         #clf = classification.adaboostClassifier(features_used[0], labels)
-        clf = classification.randomForestClassifier(features_used[0], labels)
+        # clf = classification.randomForestClassifier(features_used[0], labels)
         acc = 0
         for i in range(features_used[0].shape[0]):
             f = np.reshape(features_used[0][i], (1, -1))
             if clf.predict(f) == labels[i]:
                 acc += 1
-        print("test accuracy ", 100*acc/len(labels))
+        print("train accuracy ", 100*acc/len(labels))
         if 100*acc/len(labels) > highest_acc:
             highest_acc = 100*acc/len(labels)
             f_used = features_used_indx
@@ -86,15 +86,15 @@ for i in range(1, int(2**len(features_name))+1):
         allFeatures_test = np.concatenate(
             tuple(features_used_test), axis=1)
 
-        #clf = classification.svmClassifier(allFeatures, labels)
+        clf = classification.svmClassifier(allFeatures, labels)
         #clf = classification.adaboostClassifier(allFeatures, labels)
-        clf = classification.randomForestClassifier(allFeatures, labels)
+        # clf = classification.randomForestClassifier(allFeatures, labels)
         acc = 0
         for i in range(allFeatures.shape[0]):
             f = np.reshape(allFeatures[i], (1, -1))
             if clf.predict(f) == labels[i]:
                 acc += 1
-        print("test accuracy ", 100*acc/len(labels))
+        print("train accuracy ", 100*acc/len(labels))
         if 100*acc/len(labels) > highest_acc:
             highest_acc = 100*acc/len(labels)
             f_used = features_used_indx

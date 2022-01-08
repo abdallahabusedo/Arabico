@@ -38,49 +38,6 @@ def get_ToS(skeleton_img, type):
     return result
 
 
-def get_LVL(skeleton_img, lineThresholdFraction=0.2):
-    result = np.zeros(skeleton_img.shape)
-    rows, cols = result.shape
-    featureVector = []
-    verticalLines = []
-
-    for col in range(cols):
-        cnt = 0
-        tempCnt = 0
-        l, r = -1, -1
-        tl, tr = -1, -1
-        minl, maxr = 1e9, 0
-
-        for row in range(rows):
-            if skeleton_img[row, col] == 1:
-                tempCnt += 1
-                minl = min(minl, row)
-                maxr = max(maxr, row)
-                if tl == -1:
-                    tl = row
-                else:
-                    tr = row
-            else:
-                if tempCnt > cnt:
-                    l, r = tl, tr
-                    cnt = tempCnt
-                tempCnt = 0
-        if cnt > rows*lineThresholdFraction:
-            verticalLines.append(cnt)
-            result[l:r+1, col] = 1
-
-    if len(verticalLines) == 0:
-        verticalLines.append(0)
-    verticalLines = np.array(verticalLines)
-
-    featureVector.append(maxr-minl+1)  # text height
-    featureVector.append(verticalLines.shape[0])  # number of lines
-    featureVector.append(np.max(verticalLines))  # longest line
-    featureVector.append(np.max(verticalLines)/(maxr-minl+1))  # ratio between longest line and text height
-    featureVector.append(np.var(verticalLines))  # variance among lines
-    return featureVector, result
-
-
 def get_TTH(skeleton_img, minThicknessThreshold=5, maxThicknessThreshold=100):
     result = np.zeros(skeleton_img.shape)
     rows, cols = skeleton_img.shape
@@ -253,9 +210,7 @@ def getLVL(_skeleton_img, lineThresholdFraction=0.1):
         verticalLines.append(0)
     verticalLines = np.array(verticalLines)
 
-    featureVector.append(maxr-minl+1)  # text height
-    # featureVector.append(verticalLines.shape[0])  # number of lines
-    featureVector.append(np.max(verticalLines))  # longest line
+    featureVector.append(np.max(verticalLines)/rows)  # longest line normalized
     featureVector.append(np.max(verticalLines)/(maxr-minl+1))  # ratio between longest line and text height
     featureVector.append(np.var(verticalLines))  # variance among lines
     return featureVector
