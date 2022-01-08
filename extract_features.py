@@ -42,6 +42,8 @@ def getGradients(_img_bin):
 
         hist /= (img.shape[0]*img.shape[1])
         hist *= 100
+        hist = hist[:-2]
+        hist = hist[2:]
         return hist
     except Exception as ex:
         print("error image")

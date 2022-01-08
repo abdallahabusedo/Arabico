@@ -29,11 +29,12 @@ h_a_train = None
 f_used = None
 # used for comparison CSV file
 arr_comp = ['lpq', 'toe', 'tos', 'wor', 'hvsl', 'hpp', 'lvl',
-            'accuracy_train', 'accuracy_test', 'accuracy_validation']
-helpers.saveArrayToCSV(arr_comp, "results/svm_gridsearch_svc.csv", "", False)
+            'accuracy_train', 'accuracy_test']
+helpers.saveArrayToCSV(
+    arr_comp, "results/svm_gridsearch_svc.csv", "", False)
 for i in range(1, int(2**len(features_name))+1):
     ###
-    arr_comp = ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-']
+    arr_comp = ['-', '-', '-', '-', '-', '-', '-', '-', '-']
     ###
 
     features_used = []
@@ -56,6 +57,7 @@ for i in range(1, int(2**len(features_name))+1):
         continue
     elif len(features_used) == 1:
         clf = classification.svmClassifier(features_used[0], labels)
+        #clf = classification.svmNuClassifier(features_used[0], labels)
         #clf = classification.adaboostClassifier(features_used[0], labels)
         #clf = classification.randomForestClassifier(features_used[0], labels)
         # get score
@@ -67,14 +69,15 @@ for i in range(1, int(2**len(features_name))+1):
             highest_acc = score_test
             f_used = features_used_indx
             h_a_train = score_train
-        arr_comp[-3] = score_train
-        arr_comp[-2] = score_test
+        arr_comp[-2] = score_train
+        arr_comp[-1] = score_test
 
     else:
         allFeatures = np.concatenate(tuple(features_used), axis=1)
         allFeatures_test = np.concatenate(
             tuple(features_used_test), axis=1)
 
+        #clf = classification.svmNuClassifier(allFeatures, labels)
         clf = classification.svmClassifier(allFeatures, labels)
         #clf = classification.adaboostClassifier(allFeatures, labels)
         #clf = classification.randomForestClassifier(allFeatures, labels)
@@ -87,8 +90,8 @@ for i in range(1, int(2**len(features_name))+1):
             highest_acc = score_test
             f_used = features_used_indx
             h_a_train = score_train
-        arr_comp[-3] = score_train
-        arr_comp[-2] = score_test
+        arr_comp[-2] = score_train
+        arr_comp[-1] = score_test
     helpers.saveArrayToCSV(
         arr_comp, "results/svm_gridsearch_svc.csv", "", True)
 
