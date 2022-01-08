@@ -21,6 +21,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import GridSearchCV
 from sklearn.neural_network import MLPClassifier
 
+
 def decisionTreeClassifier():
     # load features from csv files
     wor_features, wor_labels = helpers.readFromCSV("wor.csv")
@@ -40,10 +41,20 @@ def decisionTreeClassifier():
 
 
 def svmClassifier(features, labels):
-    #clf = svm.NuSVC(gamma="auto")
+    # clf = svm.NuSVC(gamma="auto")
     parameters = {'kernel': ('linear', 'rbf'), 'C': [1, 10]}
     svc = svm.SVC()
     clf = make_pipeline(StandardScaler(), GridSearchCV(svc, parameters))
+    clf.fit(features, labels)
+    return clf
+
+
+def svmNuClassifier(features, labels):
+    # clf = svm.NuSVC(gamma="auto")
+    parameters = {'kernel': (
+        "linear", "poly", "rbf", "sigmoid"), 'nu': [0.4, 0.5, 0.6]}
+    nusvc = svm.NuSVC()
+    clf = make_pipeline(StandardScaler(), GridSearchCV(nusvc, parameters))
     clf.fit(features, labels)
     return clf
 
@@ -61,7 +72,9 @@ def randomForestClassifier(features, labels):
 
 
 def NNClassifier(features, labels):
-    clf = MLPClassifier(solver='lbfgs', alpha=1e-5,
-                        hidden_layer_sizes=(9,), random_state=1)
+    parameters = {'solver': ('lbfgs', 'sgd', 'adam'),
+                  'hidden_layer_sizes': [(100,), (128,), (20,)]}
+    mlp = MLPClassifier(max_iter=1000)
+    clf = make_pipeline(StandardScaler(), GridSearchCV(mlp, parameters))
     clf.fit(features, labels)
     return clf
