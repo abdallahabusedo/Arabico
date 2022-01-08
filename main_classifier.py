@@ -31,7 +31,7 @@ f_used = None
 arr_comp = ['lpq', 'toe', 'tos', 'wor', 'hvsl', 'hpp', 'lvl',
             'accuracy_train', 'accuracy_test']
 helpers.saveArrayToCSV(
-    arr_comp, "results/svm_gridsearch_svc.csv", "", False)
+    arr_comp, "results/NNClassifier.csv", "", False)
 for i in range(1, int(2**len(features_name))+1):
     ###
     arr_comp = ['-', '-', '-', '-', '-', '-', '-', '-', '-']
@@ -56,10 +56,13 @@ for i in range(1, int(2**len(features_name))+1):
     if len(features_used) == 0:
         continue
     elif len(features_used) == 1:
-        clf = classification.svmClassifier(features_used[0], labels)
+        #clf = classification.svmClassifier(features_used[0], labels)
         #clf = classification.svmNuClassifier(features_used[0], labels)
         #clf = classification.adaboostClassifier(features_used[0], labels)
         #clf = classification.randomForestClassifier(features_used[0], labels)
+        #clf = classification.decisionTreeClassifier(features_used[0], labels)
+        clf = classification.NNClassifier(features_used[0], labels)
+
         # get score
         score_train = clf.score(features_used[0], labels)*100
         print("train score", score_train)
@@ -78,9 +81,10 @@ for i in range(1, int(2**len(features_name))+1):
             tuple(features_used_test), axis=1)
 
         #clf = classification.svmNuClassifier(allFeatures, labels)
-        clf = classification.svmClassifier(allFeatures, labels)
-        #clf = classification.adaboostClassifier(allFeatures, labels)
+        #clf = classification.svmClassifier(allFeatures, labels)
         #clf = classification.randomForestClassifier(allFeatures, labels)
+        #clf = classification.decisionTreeClassifier(allFeatures, labels)
+        clf = classification.NNClassifier(allFeatures, labels)
 
         score_train = clf.score(allFeatures, labels)*100
         print("train score", score_train)
@@ -93,7 +97,7 @@ for i in range(1, int(2**len(features_name))+1):
         arr_comp[-2] = score_train
         arr_comp[-1] = score_test
     helpers.saveArrayToCSV(
-        arr_comp, "results/svm_gridsearch_svc.csv", "", True)
+        arr_comp, "results/NNClassifier.csv", "", True)
 
 print("\n\n\nhighest test acc  ", highest_acc)
 print("with train acc  ", h_a_train)
