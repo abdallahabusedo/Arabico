@@ -56,12 +56,12 @@ for i in range(1, int(2**len(features_name))+1):
     if len(features_used) == 0:
         continue
     elif len(features_used) == 1:
-        #clf = classification.svmClassifier(features_used[0], labels)
+        clf = classification.svmClassifier(features_used[0], labels)
         #clf = classification.svmNuClassifier(features_used[0], labels)
         #clf = classification.adaboostClassifier(features_used[0], labels)
         #clf = classification.randomForestClassifier(features_used[0], labels)
         #clf = classification.decisionTreeClassifier(features_used[0], labels)
-        clf = classification.NNClassifier(features_used[0], labels)
+        # clf = classification.NNClassifier(features_used[0], labels)
 
         # get score
         score_train = clf.score(features_used[0], labels)*100
@@ -81,10 +81,10 @@ for i in range(1, int(2**len(features_name))+1):
             tuple(features_used_test), axis=1)
 
         #clf = classification.svmNuClassifier(allFeatures, labels)
-        #clf = classification.svmClassifier(allFeatures, labels)
+        clf = classification.svmClassifier(allFeatures, labels)
         #clf = classification.randomForestClassifier(allFeatures, labels)
         #clf = classification.decisionTreeClassifier(allFeatures, labels)
-        clf = classification.NNClassifier(allFeatures, labels)
+        # clf = classification.NNClassifier(allFeatures, labels)
 
         score_train = clf.score(allFeatures, labels)*100
         print("train score", score_train)

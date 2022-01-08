@@ -32,8 +32,9 @@ def decisionTreeClassifier(features, labels):
 
 def svmClassifier(features, labels):
     # clf = svm.NuSVC(gamma="auto")
-    parameters = {'kernel': ('linear', 'rbf'), 'C': [1, 10]}
-    svc = svm.SVC()
+    parameters = {'kernel': (
+        "linear", "poly", "rbf", "sigmoid"), 'C': [1, 10,100], 'degree': [3,6,9,20]}
+    svc = svm.SVC(cache_size=500)
     clf = make_pipeline(StandardScaler(), GridSearchCV(svc, parameters))
     clf.fit(features, labels)
     return clf
@@ -56,22 +57,25 @@ def adaboostClassifier(features, labels):
 
 
 def randomForestClassifier(features, labels):
-    clf = RandomForestClassifier(max_depth=1)
+    parameters = {'n_estimators': [10,100,1000], 'max_features': ["auto", "sqrt", "log2"]}
+    mlp = RandomForestClassifier()
+    clf = make_pipeline(StandardScaler(), GridSearchCV(mlp, parameters))
     clf.fit(features, labels)
     return clf
 
 
+def NNClassifier(features, labels):
+    parameters = {'activation': ['identity', 'logistic', 'tanh', 'relu'],
+                  'learning_rate': ['constant','invscaling','adaptive'],
+                  'max_iter': [1000,1500],
+                  'validation_fraction':[0.1,0.2,0.3]
+                  }
+    mlp = MLPClassifier(solver='lbfgs',alpha=1e-5, random_state=1, hidden_layer_sizes=(9,))
+    clf = make_pipeline(StandardScaler(), GridSearchCV(mlp, parameters))
+    clf.fit(features, labels)
+    return clf
 # def NNClassifier(features, labels):
-#     # parameters = {'solver': ('lbfgs', 'sgd', 'adam'),
-#     #               'hidden_layer_sizes': [(9,)]
-#     #               }
-#     clf = MLPClassifier(max_iter=1000, alpha=1e-5,
-#                         random_state=1, hidden_layer_sizes=(9,))
-#     # clf = make_pipeline(StandardScaler(), GridSearchCV(mlp, parameters))
+#     clf = MLPClassifier(solver='lbfgs', alpha=1e-5,
+#                         hidden_layer_sizes=(9,), random_state=1,max_iter=1000)
 #     clf.fit(features, labels)
 #     return clf
-def NNClassifier(features, labels):
-    clf = MLPClassifier(solver='lbfgs', alpha=1e-5,
-                        hidden_layer_sizes=(9,), random_state=1)
-    clf.fit(features, labels)
-    return clf

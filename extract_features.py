@@ -79,26 +79,26 @@ def getLPQ(_img_gray):
     r = (winSize - 1) / 2
     x = np.arange(-r, r + 1)[np.newaxis]
 
-    w0 = np.ones_like(x)
-    w1 = np.exp(-2 * np.pi * x * STFTalpha * 1j)
-    w2 = np.conj(w1)
+    u0 = np.ones_like(x)
+    u1 = np.exp(-2 * np.pi * x * STFTalpha * 1j)
+    u2 = np.conj(u1)
 
-    filterResp1 = convolve2d(convolve2d(img, w0.T, convmode), w1, convmode)
-    filterResp2 = convolve2d(convolve2d(img, w1.T, convmode), w0, convmode)
-    filterResp3 = convolve2d(convolve2d(img, w1.T, convmode), w1, convmode)
-    filterResp4 = convolve2d(convolve2d(img, w1.T, convmode), w2, convmode)
+    filterResp1 = convolve2d(convolve2d(img, u0.T, convmode), u1, convmode)
+    filterResp2 = convolve2d(convolve2d(img, u1.T, convmode), u0, convmode)
+    filterResp3 = convolve2d(convolve2d(img, u1.T, convmode), u1, convmode)
+    filterResp4 = convolve2d(convolve2d(img, u1.T, convmode), u2, convmode)
     freqResp = np.dstack([filterResp1.real, filterResp1.imag,
                           filterResp2.real, filterResp2.imag,
                           filterResp3.real, filterResp3.imag,
                           filterResp4.real, filterResp4.imag])
 
-    inds = np.arange(freqResp.shape[2])[np.newaxis, np.newaxis, :]
-    LPQdesc = ((freqResp > 0) * (2 ** inds)).sum(2)
+    indices = np.arange(freqResp.shape[2])[np.newaxis, np.newaxis, :]
+    descriptor = ((freqResp > 0) * (2 ** indices)).sum(2)
 
-    LPQdesc = np.histogram(LPQdesc.flatten(), range(256))[0]
-    LPQdesc = LPQdesc / LPQdesc.sum()
-    LPQdesc *= 100
-    return LPQdesc
+    descriptor = np.histogram(descriptor.flatten(), range(256))[0]
+    descriptor = descriptor / descriptor.sum()
+    descriptor *= 100
+    return descriptor
 
 
 def getSDs(_img_gray):
@@ -234,4 +234,8 @@ def getHVSL(_gray_img, isTextBlack):
     num_labelsV, _ = cv2.connectedComponents(vertical)
     num_labelsH, _ = cv2.connectedComponents(horizontal)
     feature = num_labelsV/num_labelsH
-    return [feature]
+    whitePixels = np.sum(edges == 255)
+    numberofpixls = np.sum(edges)
+    ratio = whitePixels-numberofpixls
+    return [feature, num_labelsV/numberofpixls, num_labelsH/numberofpixls, ratio]
+
