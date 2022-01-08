@@ -19,7 +19,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import GridSearchCV
-
+from sklearn.neural_network import MLPClassifier
 
 def decisionTreeClassifier():
     # load features from csv files
@@ -60,5 +60,12 @@ def adaboostClassifier(features, labels):
 
 def randomForestClassifier(features, labels):
     clf = RandomForestClassifier(max_depth=1)
+    clf.fit(features, labels)
+    return clf
+
+
+def NNClassifier(features, labels):
+    clf = MLPClassifier(solver='lbfgs', alpha=1e-5,
+                        hidden_layer_sizes=(9,), random_state=1)
     clf.fit(features, labels)
     return clf
