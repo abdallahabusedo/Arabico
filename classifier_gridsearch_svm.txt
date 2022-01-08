@@ -1,0 +1,520 @@
+features used
+hpp
+train score 0.8350148367952522
+test score 0.375
+train accuracy  83.50148367952522
+test accuracy  37.5
+features used
+hslv
+train score 0.29198813056379824
+test score 0.1875
+train accuracy  29.198813056379823
+test accuracy  18.75
+features used
+hpp
+hslv
+train score 0.8830860534124629
+test score 0.34375
+train accuracy  88.30860534124629
+test accuracy  34.375
+features used
+wor
+train score 0.3317507418397626
+test score 0.21875
+train accuracy  33.175074183976264
+test accuracy  21.875
+features used
+hpp
+wor
+train score 0.8510385756676558
+test score 0.40625
+train accuracy  85.10385756676558
+test accuracy  40.625
+features used
+hslv
+wor
+train score 0.4902077151335312
+test score 0.1875
+train accuracy  49.02077151335312
+test accuracy  18.75
+features used
+hpp
+hslv
+wor
+train score 0.8931750741839762
+test score 0.4166666666666667
+train accuracy  89.31750741839762
+test accuracy  41.666666666666664
+features used
+tos
+train score 0.7655786350148368
+test score 0.46875
+train accuracy  76.55786350148368
+test accuracy  46.875
+features used
+hpp
+tos
+train score 0.9679525222551929
+test score 0.4583333333333333
+train accuracy  96.79525222551929
+test accuracy  45.833333333333336
+features used
+hslv
+tos
+train score 0.7780415430267063
+test score 0.46875
+train accuracy  77.80415430267063
+test accuracy  46.875
+features used
+hpp
+hslv
+tos
+train score 0.970919881305638
+test score 0.46875
+train accuracy  97.09198813056379
+test accuracy  46.875
+features used
+wor
+tos
+train score 0.8706231454005935
+test score 0.3854166666666667
+train accuracy  87.06231454005935
+test accuracy  38.541666666666664
+features used
+hpp
+wor
+tos
+train score 0.9738872403560831
+test score 0.4895833333333333
+train accuracy  97.3887240356083
+test accuracy  48.958333333333336
+features used
+hslv
+wor
+tos
+train score 0.886646884272997
+test score 0.3854166666666667
+train accuracy  88.66468842729971
+test accuracy  38.541666666666664
+features used
+hpp
+hslv
+wor
+tos
+train score 0.973293768545994
+test score 0.5104166666666666
+train accuracy  97.3293768545994
+test accuracy  51.041666666666664
+features used
+toe
+train score 0.7643916913946588
+test score 0.3854166666666667
+train accuracy  76.43916913946587
+test accuracy  38.541666666666664
+features used
+hpp
+toe
+train score 0.9537091988130564
+test score 0.4583333333333333
+train accuracy  95.37091988130564
+test accuracy  45.833333333333336
+features used
+hslv
+toe
+train score 0.797032640949555
+test score 0.3958333333333333
+train accuracy  79.70326409495549
+test accuracy  39.583333333333336
+features used
+hpp
+hslv
+toe
+train score 0.9596439169139466
+test score 0.46875
+train accuracy  95.96439169139465
+test accuracy  46.875
+features used
+wor
+toe
+train score 0.8540059347181009
+test score 0.3541666666666667
+train accuracy  85.40059347181008
+test accuracy  35.416666666666664
+features used
+hpp
+wor
+toe
+train score 0.9578635014836795
+test score 0.5
+train accuracy  95.78635014836796
+test accuracy  50.0
+features used
+hslv
+wor
+toe
+train score 0.8658753709198813
+test score 0.3854166666666667
+train accuracy  86.58753709198812
+test accuracy  38.541666666666664
+features used
+hpp
+hslv
+wor
+toe
+train score 0.9655786350148368
+test score 0.5208333333333334
+train accuracy  96.55786350148368
+test accuracy  52.083333333333336
+features used
+tos
+toe
+train score 0.9216617210682493
+test score 0.4375
+train accuracy  92.16617210682493
+test accuracy  43.75
+features used
+hpp
+tos
+toe
+train score 0.9845697329376855
+test score 0.46875
+train accuracy  98.45697329376854
+test accuracy  46.875
+features used
+hslv
+tos
+toe
+train score 0.9234421364985164
+test score 0.4479166666666667
+train accuracy  92.34421364985164
+test accuracy  44.791666666666664
+features used
+hpp
+hslv
+tos
+toe
+train score 0.9857566765578635
+test score 0.4895833333333333
+train accuracy  98.57566765578635
+test accuracy  48.958333333333336
+features used
+wor
+tos
+toe
+train score 0.9632047477744807
+test score 0.4583333333333333
+train accuracy  96.32047477744807
+test accuracy  45.833333333333336
+features used
+hpp
+wor
+tos
+toe
+train score 0.9685459940652819
+test score 0.4895833333333333
+train accuracy  96.8545994065282
+test accuracy  48.958333333333336
+features used
+hslv
+wor
+tos
+toe
+train score 0.96973293768546
+test score 0.5
+train accuracy  96.973293768546
+test accuracy  50.0
+features used
+hpp
+hslv
+wor
+tos
+toe
+train score 0.9857566765578635
+test score 0.5625
+train accuracy  98.57566765578635
+test accuracy  56.25
+features used
+lpq
+train score 0.9994065281899109
+test score 0.4270833333333333
+train accuracy  99.9406528189911
+test accuracy  42.708333333333336
+features used
+hpp
+lpq
+train score 1.0
+test score 0.4375
+train accuracy  100.0
+test accuracy  43.75
+features used
+hslv
+lpq
+train score 0.9994065281899109
+test score 0.4270833333333333
+train accuracy  99.9406528189911
+test accuracy  42.708333333333336
+features used
+hpp
+hslv
+lpq
+train score 1.0
+test score 0.4375
+train accuracy  100.0
+test accuracy  43.75
+features used
+wor
+lpq
+train score 1.0
+test score 0.4270833333333333
+train accuracy  100.0
+test accuracy  42.708333333333336
+features used
+hpp
+wor
+lpq
+train score 1.0
+test score 0.4375
+train accuracy  100.0
+test accuracy  43.75
+features used
+hslv
+wor
+lpq
+train score 1.0
+test score 0.4270833333333333
+train accuracy  100.0
+test accuracy  42.708333333333336
+features used
+hpp
+hslv
+wor
+lpq
+train score 1.0
+test score 0.46875
+train accuracy  100.0
+test accuracy  46.875
+features used
+tos
+lpq
+train score 1.0
+test score 0.4270833333333333
+train accuracy  100.0
+test accuracy  42.708333333333336
+features used
+hpp
+tos
+lpq
+train score 1.0
+test score 0.4583333333333333
+train accuracy  100.0
+test accuracy  45.833333333333336
+features used
+hslv
+tos
+lpq
+train score 1.0
+test score 0.4270833333333333
+train accuracy  100.0
+test accuracy  42.708333333333336
+features used
+hpp
+hslv
+tos
+lpq
+train score 1.0
+test score 0.4583333333333333
+train accuracy  100.0
+test accuracy  45.833333333333336
+features used
+wor
+tos
+lpq
+train score 1.0
+test score 0.4270833333333333
+train accuracy  100.0
+test accuracy  42.708333333333336
+features used
+hpp
+wor
+tos
+lpq
+train score 1.0
+test score 0.4583333333333333
+train accuracy  100.0
+test accuracy  45.833333333333336
+features used
+hslv
+wor
+tos
+lpq
+train score 1.0
+test score 0.4583333333333333
+train accuracy  100.0
+test accuracy  45.833333333333336
+features used
+hpp
+hslv
+wor
+tos
+lpq
+train score 1.0
+test score 0.4479166666666667
+train accuracy  100.0
+test accuracy  44.791666666666664
+features used
+toe
+lpq
+train score 1.0
+test score 0.4479166666666667
+train accuracy  100.0
+test accuracy  44.791666666666664
+features used
+hpp
+toe
+lpq
+train score 1.0
+test score 0.4270833333333333
+train accuracy  100.0
+test accuracy  42.708333333333336
+features used
+hslv
+toe
+lpq
+train score 1.0
+test score 0.4375
+train accuracy  100.0
+test accuracy  43.75
+features used
+hpp
+hslv
+toe
+lpq
+train score 1.0
+test score 0.4479166666666667
+train accuracy  100.0
+test accuracy  44.791666666666664
+features used
+wor
+toe
+lpq
+train score 1.0
+test score 0.4270833333333333
+train accuracy  100.0
+test accuracy  42.708333333333336
+features used
+hpp
+wor
+toe
+lpq
+train score 1.0
+test score 0.40625
+train accuracy  100.0
+test accuracy  40.625
+features used
+hslv
+wor
+toe
+lpq
+train score 1.0
+test score 0.4270833333333333
+train accuracy  100.0
+test accuracy  42.708333333333336
+features used
+hpp
+hslv
+wor
+toe
+lpq
+train score 1.0
+test score 0.46875
+train accuracy  100.0
+test accuracy  46.875
+features used
+tos
+toe
+lpq
+train score 1.0
+test score 0.3958333333333333
+train accuracy  100.0
+test accuracy  39.583333333333336
+features used
+hpp
+tos
+toe
+lpq
+train score 1.0
+test score 0.4479166666666667
+train accuracy  100.0
+test accuracy  44.791666666666664
+features used
+hslv
+tos
+toe
+lpq
+train score 1.0
+test score 0.4166666666666667
+train accuracy  100.0
+test accuracy  41.666666666666664
+features used
+hpp
+hslv
+tos
+toe
+lpq
+train score 1.0
+test score 0.4375
+train accuracy  100.0
+test accuracy  43.75
+features used
+wor
+tos
+toe
+lpq
+train score 1.0
+test score 0.3958333333333333
+train accuracy  100.0
+test accuracy  39.583333333333336
+features used
+hpp
+wor
+tos
+toe
+lpq
+train score 1.0
+test score 0.3958333333333333
+train accuracy  100.0
+test accuracy  39.583333333333336
+features used
+hslv
+wor
+tos
+toe
+lpq
+train score 1.0
+test score 0.3958333333333333
+train accuracy  100.0
+test accuracy  39.583333333333336
+features used
+hpp
+hslv
+wor
+tos
+toe
+lpq
+train score 1.0
+test score 0.4375
+train accuracy  100.0
+test accuracy  43.75
+features used
+hpp
+train score 0.8350148367952522
+test score 0.375
+train accuracy  83.50148367952522
+test accuracy  37.5
+
+
+
+highest training acc   100.0
+when using
+hpp
+lpq
