@@ -70,7 +70,6 @@ def getHPP(_img_gray):
 
 def getLPQ(_img_gray):
     winSize = 3
-    freqestim = 1
     img = np.copy(_img_gray)
     STFTalpha = 1 / winSize
     convmode = 'valid'
@@ -78,10 +77,9 @@ def getLPQ(_img_gray):
     r = (winSize - 1) / 2
     x = np.arange(-r, r + 1)[np.newaxis]
 
-    if freqestim == 1:
-        w0 = np.ones_like(x)
-        w1 = np.exp(-2 * np.pi * x * STFTalpha * 1j)
-        w2 = np.conj(w1)
+    w0 = np.ones_like(x)
+    w1 = np.exp(-2 * np.pi * x * STFTalpha * 1j)
+    w2 = np.conj(w1)
 
     filterResp1 = convolve2d(convolve2d(img, w0.T, convmode), w1, convmode)
     filterResp2 = convolve2d(convolve2d(img, w1.T, convmode), w0, convmode)
@@ -97,7 +95,7 @@ def getLPQ(_img_gray):
 
     LPQdesc = np.histogram(LPQdesc.flatten(), range(256))[0]
     LPQdesc = LPQdesc / LPQdesc.sum()
-    LPQdesc *= 100
+    # LPQdesc *= 100
     return LPQdesc
 
 
