@@ -62,7 +62,8 @@ for i in range(1, int(2**len(features_name))+1):
     if len(features_used) == 0:
         continue
     elif len(features_used) == 1:
-        clf = classification.svmClassifier(features_used[0], labels)
+        #clf = classification.svmClassifier(features_used[0], labels)
+        clf = classification.NNClassifier(features_used[0], labels)
         #clf = classification.adaboostClassifier(features_used[0], labels)
         #clf = classification.randomForestClassifier(features_used[0], labels)
         # get score

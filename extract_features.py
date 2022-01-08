@@ -141,7 +141,7 @@ def getWOr(_img_gray):
     return [s]
 
 
-def getLVL(_skeleton_img, lineThresholdFraction=0.2):
+def getLVL(_skeleton_img, lineThresholdFraction=0.1):
     skeleton_img = np.copy(_skeleton_img)
     skeleton_img = skeleton_img == False
     rows, cols = skeleton_img.shape
@@ -169,9 +169,7 @@ def getLVL(_skeleton_img, lineThresholdFraction=0.2):
         verticalLines.append(0)
     verticalLines = np.array(verticalLines)
 
-    featureVector.append(maxr-minl+1)  # text height
-    featureVector.append(verticalLines.shape[0])  # number of lines
-    featureVector.append(np.max(verticalLines))  # longest line
+    featureVector.append(np.max(verticalLines)/rows)  # longest line normalized
     # ratio between longest line and text height
     featureVector.append(np.max(verticalLines)/(maxr-minl+1))
     featureVector.append(np.var(verticalLines))  # variance among lines
