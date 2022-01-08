@@ -14,7 +14,9 @@ import preprocessing
 import extract_features
 from sklearn import tree
 from sklearn import svm
-
+from sklearn.ensemble import AdaBoostClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.neural_network import MLPClassifier
 
 def decisionTreeClassifier():
     # load features from csv files
@@ -36,5 +38,28 @@ def decisionTreeClassifier():
 
 def svmClassifier(features, labels):
     clf = svm.NuSVC(gamma="auto")
+    clf.fit(features, labels)
+    return clf
+
+
+# def adaboostDesicionTreeClassifier(features, labels, features_test, labels_test, T):
+#     return adaboostClassifier(labels, features, labels_test, features_test, T,  tree.DecisionTreeClassifier())
+
+
+def adaboostClassifier(features, labels):
+    clf = AdaBoostClassifier(n_estimators=100, random_state=0)
+    clf.fit(features, labels)
+    return clf
+
+
+def randomForestClassifier(features, labels):
+    clf = RandomForestClassifier(max_depth=1)
+    clf.fit(features, labels)
+    return clf
+
+
+def NNClassifier(features, labels):
+    clf = MLPClassifier(solver='lbfgs', alpha=1e-5,
+                        hidden_layer_sizes=(1, 9), random_state=1)
     clf.fit(features, labels)
     return clf
