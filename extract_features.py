@@ -70,7 +70,6 @@ def getHPP(_img_gray):
 
 def getLPQ(_img_gray):
     winSize = 3
-    freqestim = 1
     img = np.copy(_img_gray)
     STFTalpha = 1 / winSize
     convmode = 'valid'
@@ -78,10 +77,9 @@ def getLPQ(_img_gray):
     r = (winSize - 1) / 2
     x = np.arange(-r, r + 1)[np.newaxis]
 
-    if freqestim == 1:
-        w0 = np.ones_like(x)
-        w1 = np.exp(-2 * np.pi * x * STFTalpha * 1j)
-        w2 = np.conj(w1)
+    w0 = np.ones_like(x)
+    w1 = np.exp(-2 * np.pi * x * STFTalpha * 1j)
+    w2 = np.conj(w1)
 
     filterResp1 = convolve2d(convolve2d(img, w0.T, convmode), w1, convmode)
     filterResp2 = convolve2d(convolve2d(img, w1.T, convmode), w0, convmode)
@@ -97,7 +95,7 @@ def getLPQ(_img_gray):
 
     LPQdesc = np.histogram(LPQdesc.flatten(), range(256))[0]
     LPQdesc = LPQdesc / LPQdesc.sum()
-    LPQdesc *= 100
+    # LPQdesc *= 100
     return LPQdesc
 
 
@@ -237,33 +235,3 @@ def getHVSL(_gray_img, isTextBlack):
     num_labelsH, _ = cv2.connectedComponents(horizontal)
     feature = num_labelsV/num_labelsH
     return [feature]
-
-
-def LVL(skeleton):
-    skeleton = np.uint8(skeleton)*255
-    vertical = skeleton.copy()
-    rows = vertical.shape[0]
-    vertical_size = max(rows // 30, 2)
-    # Avoiding having (1,0) strcture element
-    vertical_size = vertical_size if vertical_size > 0 else vertical_size+1
-    # Create the suitable strcture element
-    verticalStructure = cv2.getStructuringElement(
-        cv2.MORPH_RECT, (1, int(vertical_size)))
-    vertical = cv2.erode(vertical, verticalStructure)
-    vertical = cv2.dilate(vertical.astype(np.uint8), verticalStructure)
-    labelNumber, labeledImage, stats, _ = cv2.connectedComponentsWithStats(
-        vertical.astype(np.uint8), connectivity=8)
-    maxLabel = np.argmax([np.sum(vertical[labeledImage == i])
-                         for i in range(1, labelNumber)])+1
-    VL = labelNumber-1  # excluding the background label
-    textHeight = cv2.boundingRect(vertical)[3]
-    # maxLength=np.sum(s==maxLabel)
-    maxLength = np.max(stats[1:, 3])
-    diffRatio = textHeight/maxLength
-    # TODO Check the eqn
-    var = np.diff(stats[1:, 3])
-    # print(var)
-
-    # print("textHeight", textHeight, "maxLength", maxLength,
-    #       "diffRatio", diffRatio, "verticalLines", VL)
-    return [VL, textHeight, maxLength, diffRatio]

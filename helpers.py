@@ -99,3 +99,16 @@ def readFromCSV(filename):
         labels.append(label)
 
     return np.asarray(features), labels
+
+
+def euc_dist(X):
+    Y = X = X.astype(np.float)
+    XX = np.sum(X * X, axis=1)[:, np.newaxis]
+    YY = XX.T
+    distances = np.dot(X, Y.T)
+    distances *= -2
+    distances += XX
+    distances += YY
+    np.maximum(distances, 0, distances)
+    distances.flat[::distances.shape[0] + 1] = 0.0
+    return np.sqrt(distances)

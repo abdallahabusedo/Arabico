@@ -16,6 +16,9 @@ from sklearn import tree
 from sklearn import svm
 from sklearn.ensemble import AdaBoostClassifier
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import GridSearchCV
 from sklearn.neural_network import MLPClassifier
 
 def decisionTreeClassifier():
@@ -37,7 +40,10 @@ def decisionTreeClassifier():
 
 
 def svmClassifier(features, labels):
-    clf = svm.NuSVC(gamma="auto")
+    #clf = svm.NuSVC(gamma="auto")
+    parameters = {'kernel': ('linear', 'rbf'), 'C': [1, 10]}
+    svc = svm.SVC()
+    clf = make_pipeline(StandardScaler(), GridSearchCV(svc, parameters))
     clf.fit(features, labels)
     return clf
 
@@ -60,6 +66,6 @@ def randomForestClassifier(features, labels):
 
 def NNClassifier(features, labels):
     clf = MLPClassifier(solver='lbfgs', alpha=1e-5,
-                        hidden_layer_sizes=(1, 9), random_state=1)
+                        hidden_layer_sizes=(9,), random_state=1)
     clf.fit(features, labels)
     return clf
