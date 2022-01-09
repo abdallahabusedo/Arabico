@@ -19,7 +19,7 @@ def main(in_name, out_name):
     time_file.close()
     result_file = open(out_name+result_file_name, "a")
     time_file = open(out_name+time_file_name, "a")
-    clf = helpers.loadCLfParameters("finalized_classifier.sav")
+    clf = helpers.loadCLfParameters("nn_lpq.sav")
     imgsPaths = helpers.getImgsPaths(in_name)
     for imgPath in imgsPaths:
         st_time = time.time()
@@ -37,13 +37,13 @@ def main(in_name, out_name):
             wor = extract_features.getWOr(img)
             lvl = extract_features.getLVL(img_skeleton)
             hvsl = extract_features.getHVSL(img, isTextBlack)
-            allFeatures = np.concatenate((toe, tos, wor, hvsl, hpp, lvl))
+            allFeatures = np.concatenate((lpq,toe, tos, wor, hvsl, lvl,hpp))
 
             # print(len(toe), len(tos), len(hpp), len(lvl), len(hvsl), len(wor))
             # print(allFeatures.shape)
             fv = np.reshape(allFeatures, (1, -1))
             label_predicted = clf.predict(fv)
-            print(label_predicted[0])
+            #print(label_predicted[0])
             end_time = time.time()-st_time
             end_time = max(0.001, end_time)
             # save to result time

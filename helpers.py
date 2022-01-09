@@ -13,6 +13,7 @@ import os
 import os.path as path
 import csv
 import pickle
+import re
 
 
 def show_images(images, titles=None):
@@ -37,15 +38,19 @@ def show_images(images, titles=None):
 
 def readImageGray(imgPath):
     img = imread(imgPath, as_gray=True)
-    img = img.astype(np.float64) / np.max(img)
+    img = img.astype(np.float64) / max(0.001, np.max(img))
     img = 255 * img
     img = img.astype(np.uint8)
     return img
 
 
 def getImgsPaths(_path):
-    imgs = [path.join(_path, f) for f in os.listdir(
-        _path) if path.isfile(path.join(_path, f))]
+    def convert(text): return int(text) if text.isdigit() else text.lower()
+    def alphanum_key(key): return [convert(c)
+                                   for c in re.split('([0-9]+)', key)]
+    listFiles = sorted(os.listdir(_path), key=alphanum_key)
+    imgs = [path.join(_path, f)
+            for f in listFiles if path.isfile(path.join(_path, f))]
     return imgs
 
 
@@ -106,7 +111,7 @@ def readFromCSV(filename):
 
 
 def saveClfParameters(clf):
-    filename = 'finalized_classifier.sav'
+    filename = 'nn_lpq.sav'
     pickle.dump(clf, open(filename, 'wb'))
 
 

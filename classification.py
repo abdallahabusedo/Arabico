@@ -67,10 +67,10 @@ def randomForestClassifier(features, labels):
 def NNClassifier(features, labels):
     parameters = {'activation': ['identity', 'logistic', 'tanh', 'relu'],
                   'learning_rate': ['constant','invscaling','adaptive'],
-                  'max_iter': [1000,1500],
-                  'validation_fraction':[0.1,0.2,0.3]
+
                   }
-    mlp = MLPClassifier(solver='lbfgs',alpha=1e-5, random_state=1, hidden_layer_sizes=(9,))
+    mlp = MLPClassifier(solver='lbfgs', max_iter=10000000,
+                        alpha=1e-5, random_state=1, hidden_layer_sizes=(9,))
     clf = make_pipeline(StandardScaler(), GridSearchCV(mlp, parameters))
     clf.fit(features, labels)
     return clf

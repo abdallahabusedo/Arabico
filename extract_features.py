@@ -58,6 +58,7 @@ def getHPP(_img_gray):
     height = 50
     img = resize(img, (height, height),
                  anti_aliasing=True)
+    isBlackText = helpers.isTextBlack(_img_gray)
     img = preprocessing.binarization(img)
     img = img == False
     horz_sum = np.sum(img, axis=1)
@@ -233,9 +234,8 @@ def getHVSL(_gray_img, isTextBlack):
     vertical = cv2.dilate(vertical, verticalStructure)
     num_labelsV, _ = cv2.connectedComponents(vertical)
     num_labelsH, _ = cv2.connectedComponents(horizontal)
-    feature = num_labelsV/num_labelsH
+    feature = num_labelsV/max(num_labelsH,1)
     whitePixels = np.sum(edges == 255)
     numberofpixls = np.sum(edges)
     ratio = whitePixels-numberofpixls
-    return [feature, num_labelsV/numberofpixls, num_labelsH/numberofpixls, ratio]
-
+    return [feature, num_labelsV/max(numberofpixls,1), num_labelsH/max(numberofpixls,1), ratio]
